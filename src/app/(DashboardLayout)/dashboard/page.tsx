@@ -1,6 +1,6 @@
 'use client';
 import { Grid, Typography } from '@mui/material';
-import NavCard from './components/shared/NavCard';
+import NavCard from '../components/shared/NavCard';
 import AuthGuard from '@/components/auth/AuthGuard';
 
 export default function Home() {

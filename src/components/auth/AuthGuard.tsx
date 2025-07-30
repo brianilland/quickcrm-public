@@ -1,18 +1,24 @@
 'use client';
-import { useIsAuthenticated } from "@azure/msal-react";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useIsAuthenticated, useMsal } from "@azure/msal-react";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
+  const { instance } = useMsal();
   const isAuthenticated = useIsAuthenticated();
-  const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login");
+    const accounts = instance.getAllAccounts();
+    if (!isAuthenticated && accounts.length === 0) {
+      instance.loginRedirect().catch((error) => {
+        if (error.errorCode !== "interaction_in_progress") {
+          console.error("Login error:", error);
+        }
+      });
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, instance]);
 
+  // ✅ Prevent render until we confirm user is authenticated
   if (!isAuthenticated) return null;
+
   return <>{children}</>;
 }
