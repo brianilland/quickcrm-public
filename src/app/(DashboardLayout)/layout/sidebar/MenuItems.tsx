@@ -75,12 +75,6 @@ const Menuitems = [
     icon: IconLogin,
     href: "/demo-pages/authentication/login",
   },
-  {
-    id: uniqueId(),
-    title: "Register",
-    icon: IconUserPlus,
-    href: "/demo-pages/authentication/register",
-  },
 
   {
     navlabel: true,
