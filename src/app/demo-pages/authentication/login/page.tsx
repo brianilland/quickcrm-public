@@ -4,7 +4,7 @@ import { Grid, Box, Card, Stack, Typography } from "@mui/material";
 // components
 import PageContainer from "@/app/(DashboardLayout)/components/container/PageContainer";
 import Logo from "@/app/(DashboardLayout)/layout/shared/logo/Logo";
-import AuthLogin from "../auth/AuthLogin";
+import AuthLogin from "../../../authentication/auth/AuthLogin";
 
 const Login2 = () => {
   return (

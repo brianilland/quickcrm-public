@@ -1,61 +1,39 @@
-'use client'
-import { Grid, Box } from '@mui/material';
-import PageContainer from '@/app/(DashboardLayout)/components/container/PageContainer';
-// components
-import SalesOverview from '@/app/(DashboardLayout)/components/dashboard/SalesOverview';
-import YearlyBreakup from '@/app/(DashboardLayout)/components/dashboard/YearlyBreakup';
-import RecentTransactions from '@/app/(DashboardLayout)/components/dashboard/RecentTransactions';
-import ProductPerformance from '@/app/(DashboardLayout)/components/dashboard/ProductPerformance';
-import Blog from '@/app/(DashboardLayout)/components/dashboard/Blog';
-import MonthlyEarnings from '@/app/(DashboardLayout)/components/dashboard/MonthlyEarnings';
+'use client';
+import { Grid, Typography } from '@mui/material';
+import NavCard from './components/shared/NavCard';
 
-const Dashboard = () => {
+export default function Home() {
   return (
-    <PageContainer title="Dashboard" description="this is Dashboard">
-      <Box>
-        <Grid container spacing={3}>
-          <Grid
-            size={{
-              xs: 12,
-              lg: 8
-            }}>
-            <SalesOverview />
-          </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              lg: 4
-            }}>
-            <Grid container spacing={3}>
-              <Grid size={12}>
-                <YearlyBreakup />
-              </Grid>
-              <Grid size={12}>
-                <MonthlyEarnings />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              lg: 4
-            }}>
-            <RecentTransactions />
-          </Grid>
-          <Grid
-            size={{
-              xs: 12,
-              lg: 8
-            }}>
-            <ProductPerformance />
-          </Grid>
-          <Grid size={12}>
-            <Blog />
-          </Grid>
-        </Grid>
-      </Box>
-    </PageContainer>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
+        <Typography variant="h5" fontWeight={600}>
+          Quick CRM
+        </Typography>
+      </Grid>
+
+      <Grid item xs={12} sm={6} md={4}>
+        <NavCard
+          title="Quick Update"
+          description="Create a fast sales rep update."
+          path="/quick-update"
+        />
+      </Grid>
+
+      <Grid item xs={12} sm={6} md={4}>
+        <NavCard
+          title="My Activities"
+          description="View and manage your CRM activities."
+          path="/activities"
+        />
+      </Grid>
+
+      <Grid item xs={12} sm={6} md={4}>
+        <NavCard
+          title="My Accounts"
+          description="Browse or manage your assigned accounts."
+          path="/accounts"
+        />
+      </Grid>
+    </Grid>
   );
 }
-
-export default Dashboard;

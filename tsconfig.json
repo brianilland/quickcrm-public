@@ -14,6 +14,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": ["@mui/material", "@types/react"],
     "plugins": [
       {
         "name": "next"

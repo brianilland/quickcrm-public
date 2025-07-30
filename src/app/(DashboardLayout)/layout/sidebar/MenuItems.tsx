@@ -6,6 +6,9 @@ import {
   IconMoodHappy,
   IconTypography,
   IconUserPlus,
+  IconEdit,
+  IconClipboardText,
+  IconBuilding,
 } from "@tabler/icons-react";
 
 import { uniqueId } from "lodash";
@@ -15,29 +18,53 @@ const Menuitems = [
     navlabel: true,
     subheader: "HOME",
   },
-
   {
     id: uniqueId(),
     title: "Dashboard",
     icon: IconLayoutDashboard,
     href: "/",
   },
+
   {
     navlabel: true,
-    subheader: "UTILITIES",
+    subheader: "MY QUICK CRM",
+  },
+  {
+    id: uniqueId(),
+    title: "Quick Update",
+    icon: IconEdit,
+    href: "/quick-update",
+  },
+  {
+    id: uniqueId(),
+    title: "My Activities",
+    icon: IconClipboardText,
+    href: "/activities",
+  },
+  {
+    id: uniqueId(),
+    title: "My Accounts",
+    icon: IconBuilding,
+    href: "/accounts",
+  },
+
+  {
+    navlabel: true,
+    subheader: "SETTINGS",
   },
   {
     id: uniqueId(),
     title: "Typography",
     icon: IconTypography,
-    href: "/utilities/typography",
+    href: "/demo-pages/utilities/typography",
   },
   {
     id: uniqueId(),
     title: "Shadow",
     icon: IconCopy,
-    href: "/utilities/shadow",
+    href: "/demo-pages/utilities/shadow",
   },
+
   {
     navlabel: true,
     subheader: "AUTH",
@@ -46,17 +73,18 @@ const Menuitems = [
     id: uniqueId(),
     title: "Login",
     icon: IconLogin,
-    href: "/authentication/login",
+    href: "/demo-pages/authentication/login",
   },
   {
     id: uniqueId(),
     title: "Register",
     icon: IconUserPlus,
-    href: "/authentication/register",
+    href: "/demo-pages/authentication/register",
   },
+
   {
     navlabel: true,
-    subheader: " EXTRA",
+    subheader: "EXTRA",
   },
   {
     id: uniqueId(),
@@ -68,11 +96,8 @@ const Menuitems = [
     id: uniqueId(),
     title: "Sample Page",
     icon: IconAperture,
-    href: "/sample-page",
+    href: "/demo-pages/sample-page",
   },
-
 ];
 
 export default Menuitems;
-
-
