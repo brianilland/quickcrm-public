@@ -1,7 +1,9 @@
+// src/components/auth/AuthGuard.tsx
+
 'use client';
-import { useEffect } from "react";
-import { useIsAuthenticated, useMsal } from "@azure/msal-react";
-import { InteractionStatus } from "@azure/msal-browser";
+import { useEffect } from 'react';
+import { useMsal, useIsAuthenticated } from '@azure/msal-react';
+import { InteractionStatus } from '@azure/msal-browser';
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const { instance, inProgress } = useMsal();
@@ -9,20 +11,17 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const accounts = instance.getAllAccounts();
-
-    // ✅ Wait for MSAL to finish before making redirect decisions
-    if (inProgress === InteractionStatus.None && !isAuthenticated && accounts.length === 0) {
+    if (!isAuthenticated && accounts.length === 0 && inProgress === InteractionStatus.None) {
       instance.loginRedirect().catch((error) => {
-        if (error.errorCode !== "interaction_in_progress") {
-          console.error("Login error:", error);
+        if (error.errorCode !== 'interaction_in_progress') {
+          console.error('Login error:', error);
         }
       });
     }
-  }, [isAuthenticated, instance, inProgress]);
+  }, [isAuthenticated, inProgress, instance]);
 
-  // ✅ Wait for MSAL to finish
-  if (inProgress !== InteractionStatus.None) return null;
-  if (!isAuthenticated) return null;
+  // ✅ Block rendering while MSAL is figuring things out
+  if (inProgress !== InteractionStatus.None || !isAuthenticated) return null;
 
   return <>{children}</>;
 }

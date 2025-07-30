@@ -1,3 +1,5 @@
+// src/app/page.tsx
+
 'use client';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -10,15 +12,22 @@ export default function LoginLandingPage() {
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
 
-  // Redirect if authenticated once MSAL is idle
+  const handleLogin = () => {
+    instance.loginRedirect({
+      redirectUri: '/', // come back here
+      scopes: [],
+    });
+  };
+
   useEffect(() => {
     if (inProgress === InteractionStatus.None && isAuthenticated) {
       router.replace('/dashboard');
     }
   }, [inProgress, isAuthenticated, router]);
 
-  // Block rendering if MSAL is busy (prevents flicker)
-  if (inProgress !== InteractionStatus.None || isAuthenticated) return null;
+  // ✅ Don’t show anything while MSAL is loading
+  if (inProgress !== InteractionStatus.None) return null;
+  if (isAuthenticated) return null;
 
   return (
     <Container
@@ -37,7 +46,6 @@ export default function LoginLandingPage() {
           src="/images/logos/dark-logo.png"
           alt="QuickCRM Logo"
           height="60"
-          style={{ maxWidth: '100%' }}
         />
       </Box>
 
@@ -50,9 +58,7 @@ export default function LoginLandingPage() {
       </Typography>
 
       <Button
-        onClick={() =>
-          instance.loginRedirect({ redirectUri: '/dashboard', scopes: [] })
-        }
+        onClick={handleLogin}
         variant="contained"
         size="large"
         sx={{ textTransform: 'none', px: 4 }}
