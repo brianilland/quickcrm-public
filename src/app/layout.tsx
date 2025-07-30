@@ -2,8 +2,8 @@
 import { baselightTheme } from "@/utils/theme/DefaultColors";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import './global.css'
-
+import AuthProvider from "@/auth/AuthProvider";
+import "./global.css";
 
 export default function RootLayout({
   children,
@@ -16,11 +16,12 @@ export default function RootLayout({
         <title>QuickCRM</title>
       </head>
       <body>
-        <ThemeProvider theme={baselightTheme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider theme={baselightTheme}>
+            <CssBaseline />
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
