@@ -2,29 +2,23 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMsal, useIsAuthenticated } from '@azure/msal-react';
+import { InteractionStatus } from '@azure/msal-browser';
 import { Button, Container, Typography, Box } from '@mui/material';
 
 export default function LoginLandingPage() {
-  const { instance } = useMsal();
+  const { instance, inProgress } = useMsal();
   const isAuthenticated = useIsAuthenticated();
   const router = useRouter();
 
-  const handleLogin = () => {
-    instance.loginRedirect({
-      redirectUri: '/dashboard',
-      scopes: [],
-    });
-  };
-
-  // ✅ Redirect to /dashboard if already logged in
+  // Redirect if authenticated once MSAL is idle
   useEffect(() => {
-    if (isAuthenticated) {
+    if (inProgress === InteractionStatus.None && isAuthenticated) {
       router.replace('/dashboard');
     }
-  }, [isAuthenticated, router]);
+  }, [inProgress, isAuthenticated, router]);
 
-  // ✅ Prevent flicker of login screen for logged-in users
-  if (isAuthenticated) return null;
+  // Block rendering if MSAL is busy (prevents flicker)
+  if (inProgress !== InteractionStatus.None || isAuthenticated) return null;
 
   return (
     <Container
@@ -40,9 +34,10 @@ export default function LoginLandingPage() {
     >
       <Box mb={4}>
         <img
-          src="/images/logos/dark-logo.svg"
+          src="/images/logos/dark-logo.png"
           alt="QuickCRM Logo"
           height="60"
+          style={{ maxWidth: '100%' }}
         />
       </Box>
 
@@ -55,7 +50,9 @@ export default function LoginLandingPage() {
       </Typography>
 
       <Button
-        onClick={handleLogin}
+        onClick={() =>
+          instance.loginRedirect({ redirectUri: '/dashboard', scopes: [] })
+        }
         variant="contained"
         size="large"
         sx={{ textTransform: 'none', px: 4 }}
