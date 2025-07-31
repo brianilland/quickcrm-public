@@ -1,107 +1,129 @@
 'use client';
 
+import * as React from 'react';
 import {
-  Typography,
   Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Chip,
+  Typography,
+  IconButton,
+  Menu,
+  MenuItem,
 } from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DashboardCard from '@/app/(DashboardLayout)/components/shared/DashboardCard';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
-const activities = [
+const rows = [
   {
-    id: 'A001',
-    type: 'Email',
-    subject: 'Follow-up with client',
-    description: 'Sent follow-up email after demo',
-    status: 'Completed',
-    statusColor: 'success.main',
-    createdBy: 'Alice Johnson',
+    id: 1,
+    activityType: 'Call',
+    subject: 'Follow up with Client X',
+    description: 'Discuss progress and expectations',
+    status: 'Open',
+    createdBy: 'Alice',
     dueDate: '2025-08-01',
   },
   {
-    id: 'A002',
-    type: 'Call',
-    subject: 'Intro call',
-    description: 'Initial call with lead from form',
-    status: 'Pending',
-    statusColor: 'warning.main',
-    createdBy: 'David Kim',
-    dueDate: '2025-08-03',
+    id: 2,
+    activityType: 'Email',
+    subject: 'Send proposal',
+    description: 'Send project proposal to Client Y',
+    status: 'Completed',
+    createdBy: 'Bob',
+    dueDate: '2025-07-28',
   },
   {
-    id: 'A003',
-    type: 'Meeting',
-    subject: 'Proposal Review',
-    description: 'Discuss contract and deliverables',
-    status: 'In Progress',
-    statusColor: 'primary.main',
-    createdBy: 'Rachel Adams',
+    id: 3,
+    activityType: 'Meeting',
+    subject: 'Quarterly Review',
+    description: 'Internal review with sales team',
+    status: 'Scheduled',
+    createdBy: 'Charlie',
     dueDate: '2025-08-05',
   },
+];
+
+// Action handlers
+const handleView = (row: any) => {
+  alert(`Viewing activity: ${row.subject}`);
+};
+
+const handleComplete = (row: any) => {
+  alert(`Marked as complete: ${row.subject}`);
+};
+
+// Columns with Action menu
+const columns: GridColDef[] = [
+  { field: 'id', headerName: 'ID', width: 70 },
+  { field: 'activityType', headerName: 'Activity Type', flex: 1 },
+  { field: 'subject', headerName: 'Subject', flex: 1 },
+  { field: 'description', headerName: 'Description', flex: 2 },
+  { field: 'status', headerName: 'Status', flex: 1 },
+  { field: 'createdBy', headerName: 'Created By', flex: 1 },
+  { field: 'dueDate', headerName: 'Due Date', flex: 1 },
   {
-    id: 'A004',
-    type: 'Task',
-    subject: 'Send brochure',
-    description: 'Email company brochure to CTO',
-    status: 'Overdue',
-    statusColor: 'error.main',
-    createdBy: 'James Lee',
-    dueDate: '2025-07-28',
+    field: 'actions',
+    headerName: 'Actions',
+    sortable: false,
+    filterable: false,
+    flex: 0.5,
+    renderCell: (params) => {
+      const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+      const open = Boolean(anchorEl);
+
+      const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+        event.stopPropagation();
+        setAnchorEl(event.currentTarget);
+      };
+
+      const handleMenuClose = () => setAnchorEl(null);
+
+      return (
+        <>
+          <IconButton size="small" onClick={handleMenuClick}>
+            <MoreVertIcon fontSize="small" />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleMenuClose}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          >
+            <MenuItem
+              onClick={() => {
+                handleView(params.row);
+                handleMenuClose();
+              }}
+            >
+              View
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                handleComplete(params.row);
+                handleMenuClose();
+              }}
+            >
+              Complete
+            </MenuItem>
+          </Menu>
+        </>
+      );
+    },
   },
 ];
 
 export default function ActivitiesPage() {
   return (
-    <DashboardCard title="Activity Log">
-      <Box sx={{ overflow: 'auto', width: '100%' }}>
-        <Table
-          aria-label="activity table"
-          sx={{ whiteSpace: 'nowrap', mt: 2 }}
-        >
-          <TableHead>
-            <TableRow>
-              <TableCell><Typography variant="subtitle2" fontWeight={600}>ID</Typography></TableCell>
-              <TableCell><Typography variant="subtitle2" fontWeight={600}>Type</Typography></TableCell>
-              <TableCell><Typography variant="subtitle2" fontWeight={600}>Subject</Typography></TableCell>
-              <TableCell><Typography variant="subtitle2" fontWeight={600}>Description</Typography></TableCell>
-              <TableCell><Typography variant="subtitle2" fontWeight={600}>Status</Typography></TableCell>
-              <TableCell><Typography variant="subtitle2" fontWeight={600}>Created By</Typography></TableCell>
-              <TableCell><Typography variant="subtitle2" fontWeight={600}>Due Date</Typography></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {activities.map((activity) => (
-              <TableRow key={activity.id}>
-                <TableCell>
-                  <Typography fontSize="15px" fontWeight={500}>
-                    {activity.id}
-                  </Typography>
-                </TableCell>
-                <TableCell>{activity.type}</TableCell>
-                <TableCell>{activity.subject}</TableCell>
-                <TableCell>{activity.description}</TableCell>
-                <TableCell>
-                  <Chip
-                    label={activity.status}
-                    size="small"
-                    sx={{
-                      backgroundColor: activity.statusColor,
-                      color: '#fff',
-                      px: 1,
-                    }}
-                  />
-                </TableCell>
-                <TableCell>{activity.createdBy}</TableCell>
-                <TableCell>{activity.dueDate}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+    <DashboardCard title="My Activities">
+      <Box sx={{ height: 550, width: '100%' }}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5, 10]}
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
       </Box>
     </DashboardCard>
   );

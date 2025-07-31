@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Link from 'next/link'; // <-- Add this import at the top
 import {
   Box,
   AppBar,
@@ -49,17 +50,19 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
           <IconMenu width="20" height="20" />
         </IconButton>
 
-        <IconButton
-          size="large"
-          aria-label="show notifications"
-          color="inherit"
-          aria-controls="msgs-menu"
-          aria-haspopup="true"
-        >
-          <Badge variant="dot" color="primary">
-            <IconBellRinging size="21" stroke="1.5" />
-          </Badge>
-        </IconButton>
+  <Link href="/dashboard/notifications" passHref>
+    <IconButton
+      size="large"
+      aria-label="show notifications"
+      color="inherit"
+      aria-controls="msgs-menu"
+      aria-haspopup="true"
+    >
+      <Badge variant="dot" color="primary">
+        <IconBellRinging size="21" stroke="1.5" />
+      </Badge>
+    </IconButton>
+  </Link>
 
         <Box flexGrow={1} />
 
