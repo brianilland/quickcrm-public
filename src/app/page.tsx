@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useMsal, useIsAuthenticated } from '@azure/msal-react';
 import { InteractionStatus } from '@azure/msal-browser';
 import { Button, Container, Typography, Box } from '@mui/material';
+import { loginRequest } from '../auth/authConfig';
 
 export default function LoginLandingPage() {
   const { instance, inProgress } = useMsal();
@@ -14,8 +15,8 @@ export default function LoginLandingPage() {
 
   const handleLogin = () => {
     instance.loginRedirect({
+      ...loginRequest,
       redirectUri: '/', // come back here
-      scopes: [],
     });
   };
 
