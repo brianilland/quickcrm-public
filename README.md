@@ -18,6 +18,15 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Environment Variables
+
+This app uses Microsoft Authentication Library (MSAL) in the browser to acquire an Azure AD access token. After a user signs in, MSAL caches tokens locally and attaches them to outgoing requests so the app can call protected APIs on the user's behalf. To configure MSAL, set the following variables:
+
+- `NEXT_PUBLIC_MSAL_CLIENT_ID`: The Azure AD app (client) ID registered for this front-end.
+- `NEXT_PUBLIC_MSAL_TENANT_ID`: The Azure AD tenant (directory) ID that issues tokens for the app.
+
+To extend Dataverse access in the future, add additional scopes to the MSAL request configuration (for example, the Dataverse API scope for your environment) and wire the new scopes into your token acquisition flow. Keep the scopes centralized so new API permissions can be added without changing each call site.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
