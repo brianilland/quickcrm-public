@@ -18,18 +18,6 @@ export const sections = [
     href: '/quick-update',
   },
   {
-    title: 'Open Tasks',
-    description: 'View actions to complete',
-    image: '/images/tiles/4.jpg',
-    href: '/actions',
-  },
-    {
-    title: 'View Notifications',
-    description: 'View notifications',
-    image: '/images/tiles/1.jpg',
-    href: '/notifications',
-  },
-      {
     title: 'Full CRM',
     description: 'Advanced Functionality in PowerApps',
     image: '/images/tiles/7.jpg',
