@@ -2,10 +2,16 @@
 import { useMsal } from "@azure/msal-react";
 
 export default function UserInfo() {
-  const { accounts } = useMsal();
-  const user = accounts[0];
+  const { accounts, instance } = useMsal();
+  const activeAccount = instance.getActiveAccount() ?? accounts[0];
 
-  if (!user) return null;
+  if (!activeAccount) return null;
 
-  return <span>Signed in as: {user.username}</span>;
+  const displayName = activeAccount.name ?? activeAccount.username;
+
+  return (
+    <span>
+      Signed in as: {displayName} ({activeAccount.username})
+    </span>
+  );
 }

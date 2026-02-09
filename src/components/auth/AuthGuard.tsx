@@ -21,6 +21,16 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     }
   }, [isAuthenticated, inProgress, instance]);
 
+  useEffect(() => {
+    if (!isAuthenticated || inProgress !== InteractionStatus.None) return;
+    if (instance.getActiveAccount()) return;
+
+    const accounts = instance.getAllAccounts();
+    if (accounts.length > 0) {
+      instance.setActiveAccount(accounts[0]);
+    }
+  }, [inProgress, instance, isAuthenticated]);
+
   // ✅ Block rendering while MSAL is figuring things out
   if (inProgress !== InteractionStatus.None || !isAuthenticated) return null;
 
