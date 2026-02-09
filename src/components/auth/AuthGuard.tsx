@@ -4,6 +4,7 @@
 import { useEffect } from 'react';
 import { useMsal, useIsAuthenticated } from '@azure/msal-react';
 import { InteractionStatus } from '@azure/msal-browser';
+import { loginRequest } from '../../auth/authConfig';
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
   const { instance, inProgress } = useMsal();
@@ -12,7 +13,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const accounts = instance.getAllAccounts();
     if (!isAuthenticated && accounts.length === 0 && inProgress === InteractionStatus.None) {
-      instance.loginRedirect().catch((error) => {
+      instance.loginRedirect(loginRequest).catch((error) => {
         if (error.errorCode !== 'interaction_in_progress') {
           console.error('Login error:', error);
         }
