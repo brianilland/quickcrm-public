@@ -1,11 +1,6 @@
 import {
-  IconAperture,
-  IconCopy,
   IconLayoutDashboard,
-  IconLogin,
   IconMoodHappy,
-  IconTypography,
-  IconUserPlus,
   IconEdit,
   IconClipboardText,
   IconBuilding,
@@ -50,34 +45,6 @@ const Menuitems = [
 
   {
     navlabel: true,
-    subheader: "SETTINGS",
-  },
-  {
-    id: uniqueId(),
-    title: "Typography",
-    icon: IconTypography,
-    href: "/demo-pages/utilities/typography",
-  },
-  {
-    id: uniqueId(),
-    title: "Shadow",
-    icon: IconCopy,
-    href: "/demo-pages/utilities/shadow",
-  },
-
-  {
-    navlabel: true,
-    subheader: "AUTH",
-  },
-  {
-    id: uniqueId(),
-    title: "Login",
-    icon: IconLogin,
-    href: "/demo-pages/authentication/login",
-  },
-
-  {
-    navlabel: true,
     subheader: "EXTRA",
   },
   {
@@ -85,12 +52,6 @@ const Menuitems = [
     title: "Icons",
     icon: IconMoodHappy,
     href: "/icons",
-  },
-  {
-    id: uniqueId(),
-    title: "Sample Page",
-    icon: IconAperture,
-    href: "/demo-pages/sample-page",
   },
 ];
 
