@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import Link from 'next/link'; // <-- Add this import at the top
 import {
   Box,
   AppBar,
@@ -8,9 +7,8 @@ import {
   styled,
   Stack,
   IconButton,
-  Badge,
 } from '@mui/material';
-import { IconBellRinging, IconMenu } from '@tabler/icons-react';
+import { IconMenu } from '@tabler/icons-react';
 import Profile from './Profile';
 
 interface ItemType {
@@ -49,20 +47,6 @@ const Header = ({ toggleMobileSidebar }: ItemType) => {
         >
           <IconMenu width="20" height="20" />
         </IconButton>
-
-  <Link href="/dashboard/notifications" passHref>
-    <IconButton
-      size="large"
-      aria-label="show notifications"
-      color="inherit"
-      aria-controls="msgs-menu"
-      aria-haspopup="true"
-    >
-      <Badge variant="dot" color="primary">
-        <IconBellRinging size="21" stroke="1.5" />
-      </Badge>
-    </IconButton>
-  </Link>
 
         <Box flexGrow={1} />
 
