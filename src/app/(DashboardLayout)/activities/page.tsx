@@ -11,36 +11,9 @@ import {
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DashboardCard from '@/app/(DashboardLayout)/components/shared/DashboardCard';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { getActivities } from '@/services/activities';
 
-const rows = [
-  {
-    id: 1,
-    activityType: 'Call',
-    subject: 'Follow up with Client X',
-    description: 'Discuss progress and expectations',
-    status: 'Open',
-    createdBy: 'Alice',
-    dueDate: '2025-08-01',
-  },
-  {
-    id: 2,
-    activityType: 'Email',
-    subject: 'Send proposal',
-    description: 'Send project proposal to Client Y',
-    status: 'Completed',
-    createdBy: 'Bob',
-    dueDate: '2025-07-28',
-  },
-  {
-    id: 3,
-    activityType: 'Meeting',
-    subject: 'Quarterly Review',
-    description: 'Internal review with sales team',
-    status: 'Scheduled',
-    createdBy: 'Charlie',
-    dueDate: '2025-08-05',
-  },
-];
+const rows = getActivities();
 
 // Action handlers
 const handleView = (row: any) => {
